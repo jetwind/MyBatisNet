@@ -69,6 +69,7 @@
     <Content Include="Default.aspx" />
     <Content Include="Web.config" />
     <Content Include="ProductMap.xml" />
+    <Content Include="了解.xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Default.aspx.cs">
@@ -84,7 +85,9 @@
     <EmbeddedResource Include="Providers.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <Content Include="SqlMap.config" />
+    <EmbeddedResource Include="SqlMap.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <Content Include="log4Net.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

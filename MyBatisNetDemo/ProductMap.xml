@@ -1,22 +1,59 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <sqlMap namespace="EntityModel" xmlns="http://ibatis.apache.org/mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	
+	<alias>
+		<!-- alias:取别名
+                    assembly:表示类所在的文件
+                    type:表示该类的完整的名称
+      -->
+		<typeAlias alias="Product" assembly="EntityModel.dll" type="EntityModel.Product" />
+	</alias>
+	
+	<!--
+	resultMaps 配置结果集的与实体集的映射关系
+	-->
+	<resultMaps>
+		<resultMap id="Product_Info" class="EntityModel.Product">
+			<result  property="ProductId" column="ProductId" />
+			<result  property="Product_Name" column="Product_Name" />
+			<result  property="Product_Company" column="Product_Company" />
+			<result  property="SignDate" column="SignDate" />
+			<result  property="UpdateData" column="UpdateData" />
+		</resultMap>
+	</resultMaps>
+
+	<!--配置函数-->
+	<!--<parameterMaps>
+		<parameterMap id="map" class="Hashtable">
+			<parameter property="ProductID" column="Username" />
+			<parameter property="Product_Name" column="Product_Name" />
+			<parameter property="Product_Company" column="Product_Company" />
+			<parameter property="Weight" column="Weight" />
+		</parameterMap>
+	</parameterMaps>-->
+	
+	
   <statements>
-    
-    <select id="GetAllProducts" parameterClass="string" resultClass="hashtable">
+    <select id="GetAllProduct" parameterClass="string" resultMap="Product_Info">
       select * from product where product_company=#companyname#
     </select>
     <insert id="insertProduct" parameterClass="EntityModel.Product">
       insert into product(Product_Name,Product_Company)
       values(#Product_Name#,#Product_Company#)
     </insert>
-    <delete id="DeleteProduct" parameterClass="int" restultClass="int">
+    <delete id="DeleteProduct" parameterClass="int" resultClass="int">
       DELETE FROM dbo.Product WHERE ProductID=#ProductId#
     </delete>
-    <update id="UpdateProduct" parameterClass="EntityModel.Product" restltClass="int">
-      UPDATE Product SET Product_Name=#ProductName# WHERE ProductID=#ProductId#
+    <update id="UpdateProduct" parameterClass="Hashtable" resultClass="int">
+      UPDATE Product SET Product_Name=#Product_Name# where 1=1 
+	  <where>
+		  <if test="ProductID!=null and ProductID!=0">
+			  and ProductID=#ProductID#
+		  </if>
+	  </where>
     </update>
-    <select id="SelectAllProduct" resultClass="List">
-      SELECT * FROM Product
+    <select id="SelectAllProduct" parameterClass="Hashtable" resultClass="hashtable" >
+      SELECT * FROM Product;
     </select>
   </statements>
 </sqlMap>

@@ -1,4 +1,5 @@
-﻿using DAL;
+﻿using System.Collections;
+using DAL;
 using EntityModel;
 
 namespace BLL
@@ -22,6 +23,20 @@ namespace BLL
             }
         }
 
+        public IDictionary getInfos()
+        {
+            return dal.GetInfos();
+        }
+
+        /// <summary>
+        /// 查询
+        /// </summary>
+        /// <returns></returns>
+        public IList GetListInfos()
+        {
+            return dal.GetListInfos();
+        }
+
         /// <summary>
         /// 删除用户信息
         /// </summary>
@@ -30,6 +45,20 @@ namespace BLL
         public int DelProduct(int productId)
         {
             return dal.DelProductInfo(productId);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ht"></param>
+        public void UpdateProduct(Hashtable ht)
+        {
+            dal.UpdateProduct(ht);
+        }
+
+        public object GetObjList()
+        {
+            return dal.GetObjList();
         }
 
     }
