@@ -1,59 +1,89 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<sqlMap namespace="EntityModel" xmlns="http://ibatis.apache.org/mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<sqlMap namespace="System.Collections" xmlns="http://ibatis.apache.org/mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	
-	<alias>
-		<!-- alias:取别名
+	<!--<alias>
+		 alias:取别名
                     assembly:表示类所在的文件
                     type:表示该类的完整的名称
-      -->
+      
 		<typeAlias alias="Product" assembly="EntityModel.dll" type="EntityModel.Product" />
-	</alias>
+	</alias>-->
 	
 	<!--
 	resultMaps 配置结果集的与实体集的映射关系
 	-->
 	<resultMaps>
-		<resultMap id="Product_Info" class="EntityModel.Product">
+		<resultMap  id="Product_Info" class="Hashtable">
 			<result  property="ProductId" column="ProductId" />
 			<result  property="Product_Name" column="Product_Name" />
 			<result  property="Product_Company" column="Product_Company" />
-			<result  property="SignDate" column="SignDate" />
-			<result  property="UpdateData" column="UpdateData" />
+			<result  property="Product_Stand" column="Product_Stand" />
+			<result  property="Product_Desc" column="Product_Desc" />
+			<result  property="PostTime" column="PostTime" />
+			<!--<result  property="Product_Img" column="ProductId" type="Hashtable" select="GetProductImg" nullValue="null"/>-->
+		</resultMap>
+		
+		<resultMap  id="Product_Img" class="Hashtable">
+			<!--<result  property="ProductId" column="ProductId" />-->
+			<result  property="ProductImgSrc" column="ProductImgSrc" />
+			<result  property="ProductImgDesc" column="ProductImgDesc" />
 		</resultMap>
 	</resultMaps>
 
 	<!--配置函数-->
-	<!--<parameterMaps>
-		<parameterMap id="map" class="Hashtable">
-			<parameter property="ProductID" column="Username" />
-			<parameter property="Product_Name" column="Product_Name" />
-			<parameter property="Product_Company" column="Product_Company" />
-			<parameter property="Weight" column="Weight" />
+	<parameterMaps>
+		<parameterMap id="ProductInfoMap" class="Hashtable">
+			<parameter property="ProductID" column="ProductID" />
 		</parameterMap>
-	</parameterMaps>-->
+	</parameterMaps>
 	
 	
   <statements>
-    <select id="GetAllProduct" parameterClass="string" resultMap="Product_Info">
-      select * from product where product_company=#companyname#
-    </select>
-    <insert id="insertProduct" parameterClass="EntityModel.Product">
-      insert into product(Product_Name,Product_Company)
+    <!-- 根据ID获取产品信息 -->
+	  <select id="GetProductInfo" parameterClass="HashTable" resultMap ="Product_Info">
+		select * from products where productid=#ProductID#
+	</select>
+	  
+	  <!-- 根据产品ID 获取产品图片信息-->
+	  <select id="GetProductImg" parameterClass="int"  resultClass="HashTable">
+		  select * from ProductImg where ProductID=#ProductID#
+	  </select>
+	  
+    <insert id="insertBaseProduct" parameterClass="hashtable" resultClass="int">
+		<selectKey resultClass="int" property="ProductID" type="post">
+			SELECT @@IDENTITY AS ProductID
+		</selectKey>
+      insert into products(Product_Name,Product_Company)
       values(#Product_Name#,#Product_Company#)
     </insert>
+	  <insert id="insertProduct" parameterClass="hashtable" resultClass="int">
+		  <selectKey resultClass="int" property="ProductID" type="post">
+			  SELECT @@IDENTITY AS ProductID
+		  </selectKey>
+		  insert into products(Product_Name,Product_Company,Product_Stand,Product_Desc)
+		  values(#Product_Name#,#Product_Company#,#Product_Stand#,#Product_Desc#)
+		  
+	  </insert>
+	  <insert id="insertProductImg" parameterClass="Hashtable" resultClass="int">
+		  insert into ProductImg(ProductID,ProductImgSrc,ProductImgDesc)
+		  values(#ProductID#,#ProductImgSrc#,#ProductImgDesc#)
+	  </insert>
     <delete id="DeleteProduct" parameterClass="int" resultClass="int">
-      DELETE FROM dbo.Product WHERE ProductID=#ProductId#
+      DELETE FROM dbo.Products WHERE ProductID=#ProductId#
     </delete>
-    <update id="UpdateProduct" parameterClass="Hashtable" resultClass="int">
-      UPDATE Product SET Product_Name=#Product_Name# where 1=1 
-	  <where>
-		  <if test="ProductID!=null and ProductID!=0">
-			  and ProductID=#ProductID#
-		  </if>
-	  </where>
-    </update>
-    <select id="SelectAllProduct" parameterClass="Hashtable" resultClass="hashtable" >
-      SELECT * FROM Product;
+    <update id="UpdateProduct"  parameterClass="HashTable"  resultClass="int">
+		UPDATE Products SET Product_Name=#Product_Name#,Product_Company=#Product_Company#,Product_Stand=#Product_Stand#,Product_Desc=#Product_Desc# where ProductID=#ProductID#
+	</update>
+    <select id="SelectAllProduct"  resultClass="HashTable">
+      SELECT Product_Name,Product_Company FROM Products;
     </select>
+	  
+	  
+	  <!-- 存储过程 -->
+	  <procedure id="sp_GetProductInfos" parameterMap="ProductInfoMap" resultClass="Hashtable">
+		  sp_GetProductInfos
+	  </procedure>
+				
+	  
   </statements>
 </sqlMap>

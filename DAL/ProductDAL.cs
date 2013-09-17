@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections;
-using System.Data;
-using System.Linq;
-using EntityModel;
 using IBatisNet.DataMapper;
-using IBatisNet.DataMapper.Configuration;
 
 
 namespace DAL
@@ -34,12 +30,75 @@ namespace DAL
         /// 新增产品
         /// </summary>
         /// <param name="productInfoProduct"></param>
-        public void InsertPorduct(Product productInfoProduct)
+        public void InsertPorduct(Hashtable hs)
         {
             //Mapper.Instance().
             //ISqlMapSession iSqlMapSession = new SqlMapSession();
-            Mapper.Instance().Insert("insertProduct", productInfoProduct);
+             Mapper.Instance().Insert("insertProduct", hs);
         }
+
+        /// <summary>
+        /// 新增产品
+        /// </summary>
+        /// <param name="productInfoProduct"></param>
+        public int InsertBasePorduct(Hashtable hs)
+        {
+            return InsertReturnIden("insertBaseProduct",hs);
+        }
+
+        /// <summary>
+        /// 新增产品
+        /// </summary>
+        /// <param name="productInfoProduct"></param>
+        public int InsertPorductDetail(Hashtable hs)
+        {
+            return InsertReturnIden("insertProduct", hs);
+        }
+
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="statemment"></param>
+        /// <param name="hs"></param>
+        /// <returns></returns>
+        public int InsertReturnIden(string statemment,Hashtable hs)
+        {
+            object obj = Mapper.Instance().Insert(statemment, hs);
+            if (obj != null)
+            {
+                return (int)obj;
+            }
+            return 0;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="statemment"></param>
+        /// <param name="hs"></param>
+        /// <returns></returns>
+        public int UpdateReturnIden(string statemment, Hashtable hs)
+        {
+            object obj = Mapper.Instance().Update(statemment, hs);
+            if (obj != null)
+            {
+                return (int)obj;
+            }
+            return 0;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ht"></param>
+        public int UpdateProductInfo(Hashtable ht)
+        {
+            return UpdateReturnIden("UpdateProduct", ht); 
+            //Mapper.Instance().Update("UpdateProduct", ht);
+        }
+        
 
         /// <summary>
         /// 
@@ -76,6 +135,15 @@ namespace DAL
             return Mapper.Instance().QueryForObject<object>("SelectAllProduct", new object());
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="hs"></param>
+        /// <returns></returns>
+        public IList GetProInfosById(Hashtable hs)
+        {
+            return Mapper.Instance().QueryForList("sp_GetProductInfos", hs);
+        }
 
         /// <summary>
         /// 删除产品信息

@@ -30,16 +30,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Common.Logging">
-      <HintPath>..\External-bin\Common.Logging.dll</HintPath>
-    </Reference>
     <Reference Include="IBatisNet.Common">
       <HintPath>..\External-bin\IBatisNet.Common.dll</HintPath>
     </Reference>
-    <Reference Include="IBatisNet.DataAccess">
-      <HintPath>..\External-bin\IBatisNet.DataAccess.dll</HintPath>
-    </Reference>
-    <Reference Include="IBatisNet.DataMapper">
+    <Reference Include="IBatisNet.DataMapper, Version=1.6.2.0, Culture=neutral, PublicKeyToken=ed781d9fc396c6ca, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\External-bin\IBatisNet.DataMapper.dll</HintPath>
     </Reference>
     <Reference Include="System" />

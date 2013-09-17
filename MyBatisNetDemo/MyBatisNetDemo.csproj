@@ -66,12 +66,30 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AddProduct.aspx" />
+    <Content Include="AddProductDetail.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="Web.config" />
-    <Content Include="ProductMap.xml" />
+    <Content Include="ProductMap.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="了解.xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddProduct.aspx.cs">
+      <DependentUpon>AddProduct.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AddProduct.aspx.designer.cs">
+      <DependentUpon>AddProduct.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AddProductDetail.aspx.cs">
+      <DependentUpon>AddProductDetail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AddProductDetail.aspx.designer.cs">
+      <DependentUpon>AddProductDetail.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -84,6 +102,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Providers.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="SqlMap.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

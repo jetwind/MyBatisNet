@@ -1,10 +1,11 @@
 ﻿using IBatisNet.Common.Utilities;
+
 using IBatisNet.DataMapper;
 using IBatisNet.DataMapper.Configuration;
 
 namespace DAL
 {
-    //public class MapperService
+    //public class Mapper
     //{
     //    /// <summary>
     //    /// sqlmapper Interface
@@ -26,7 +27,7 @@ namespace DAL
     //    protected static void InitMapper()
     //    {
     //        ConfigureHandler handler = new ConfigureHandler(Configure);
-    //        DomSqlMapBuilder builder=new DomSqlMapBuilder();
+    //        DomSqlMapBuilder builder = new DomSqlMapBuilder();
     //        _mapper = builder.ConfigureAndWatch(handler);
     //    }
 
@@ -71,8 +72,8 @@ namespace DAL
     //                {
     //                    if (_mapper == null)
     //                    {
-    //                        ConfigureHandler handler=new ConfigureHandler(Configure);
-    //                        DomSqlMapBuilder builder=new DomSqlMapBuilder();
+    //                        ConfigureHandler handler = new ConfigureHandler(Configure);
+    //                        DomSqlMapBuilder builder = new DomSqlMapBuilder();
     //                        _mapper = Mapper.Instance();
     //                    }
     //                }

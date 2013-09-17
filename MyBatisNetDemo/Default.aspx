@@ -11,6 +11,17 @@
     <form id="webFrom" runat="server">
     <div>
         
+        <a href="AddProduct.aspx" target="_blank">基本信息添加</a>
+        <br/>
+        <br/>
+         <a href="AddProductDetail.aspx" target="_blank">基本详细信息添加</a>
+        
+        <br/>
+        <br/>
+          <a href="AddProductDetail.aspx?id=3" target="_blank">编辑产品信息</a>
+        
+        <br/>
+        <br/>
         <asp:Button ID="bt_Add" runat="server" Text="新增" OnClick="bt_Add_Click" />
         <br />
 
